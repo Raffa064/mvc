@@ -1,0 +1,49 @@
+#auth-form {
+  width: 100%;
+  max-width: 521px;
+  margin-inline: auto;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  line-height: 1.4rem;
+}
+
+#auth-form input,
+#auth-form button {
+  display: block;
+  width: 100%;
+  padding: .5rem 1rem;
+  border-radius: 4px;
+}
+
+#auth-form input {
+  background: #010817;
+  color: #eee;
+  border: 1px solid #212837;
+}
+
+#auth-form #post-error-dialog {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 1rem;
+  background: #f003;
+  color: red;
+  border: 1px solid red;
+  border-radius: 4px;
+}
+
+#auth-form #post-error-dialog span {
+  font-family: monospace;
+}
+
+#auth-form button {
+  background: #30a040;
+  color: #ddd;
+}
+
+#auth-form .error {
+  color: #dd4870;
+}

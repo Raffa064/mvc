@@ -1,0 +1,14 @@
+main {
+  width: 100%;
+  max-width: 512px;
+  margin-inline: auto;
+  margin-top: 2rem;
+}
+
+main #errcode {
+  color: #77aabb;
+}
+
+main p {
+  line-height: 1.5rem;
+}
