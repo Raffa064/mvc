@@ -2,10 +2,10 @@
 
 class UserModel
 {
-  private int $id;
-  private string $name;
-  private string $email;
-  private string $password;
+  public int $id;
+  public string $name;
+  public string $email;
+  public string $password;
 
   public static int $NAME_MIN_LENGTH = 3;
   public static int $NAME_MAX_LENGTH = 32;
@@ -21,9 +21,10 @@ class UserModel
     $this->password = $password;
   }
 
-  public static function create(string $name, string $email, string $password, &$err_msg): bool
+  public static function create(string $name, string $email, string $password, ?string &$err_msg, ?UserModel &$user): bool
   {
     $err_msg = null;
+    $user = null;
 
     if (
       strlen($name) < self::$NAME_MIN_LENGTH ||
@@ -58,17 +59,39 @@ class UserModel
       return false;
     }
 
+    $user = new UserModel(
+      DatabaseModel::last_insert_id(),
+      $name,
+      $email,
+      $password
+    );
+
     return true;
   }
 
-  public static function auth($email, $password): int | false
+  public static function auth(string $email, string $password, ?UserModel &$user): int | false
   {
-    $sql = "SELECT * from users WHERE email = ? AND password = ?;";
-    $result = DatabaseModel::query($sql, [$email, $password]);
+    $user = null;
 
-    if ($result === false)
+    $sql = "SELECT * from users WHERE email = ?;";
+    $result = DatabaseModel::query($sql, [$email]);
+
+    if ($result === false || count($result) != 1)
       return false;
 
-    return count($result) == 1;
+    $data = $result[0];
+
+    if ($password == $data["password"]) {
+      $user = new UserModel(
+        $data["id"],
+        $data["name"],
+        $data["email"],
+        $data["password"]
+      );
+
+      return true;
+    }
+
+    return false;
   }
 }

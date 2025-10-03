@@ -51,6 +51,11 @@ class DatabaseModel
 
     return false;
   }
+
+  public static function last_insert_id(): int | false
+  {
+    return self::$db->lastInsertId();
+  }
 }
 
 DatabaseModel::init(__DIR__ . "/../config.json");

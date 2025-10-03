@@ -4,6 +4,6 @@
     <a href="#">Contact</a>
     <a href="#">FAQ</a>
     <a href="#">About</a>
-    <a href="#">Github</a>
+    <a href="https://github.com/Raffa064/mvc" target="_blank">Github</a>
   </nav>
 </footer>

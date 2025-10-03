@@ -2,6 +2,52 @@
 
 class AuthController
 {
+  public static function start_session()
+  {
+    session_start();
+  }
+
+  public static function write_session(UserModel $user)
+  {
+    session_regenerate_id(true);
+    $_SESSION["user_id"] = $user->id;
+    $_SESSION["user_name"] = $user->name;
+    $_SESSION["user_email"] = $user->email;
+  }
+
+  public static function is_logged_in(): bool
+  {
+    return session_status() == PHP_SESSION_ACTIVE && isset($_SESSION["user_id"]);
+  }
+
+  public static function signup()
+  {
+    switch ($_SERVER["REQUEST_METHOD"]) {
+      case "POST":
+        $user_name = $_POST["user_name"];
+        $user_email = $_POST["user_email"];
+        $user_password = $_POST["user_password"];
+
+        if (UserModel::create($user_name, $user_email, $user_password, $err_msg, $user)) {
+          self::write_session($user);
+          View::redirect("/"); // TODO: /wellcome?
+        } else {
+          View::renderPage("Signup", [
+            "user_name" => $user_name,
+            "user_email" => $user_email,
+            "user_password" => $user_password,
+            "error" => $err_msg
+          ]);
+        }
+        break;
+      case "GET":
+        View::renderPage("Signup");
+        break;
+      default:
+        View::error(ERR::METHOD_NOT_ALLOWED, "Your request could not be processed due to an invalid operation.");
+    }
+  }
+
   public static function login()
   {
     switch ($_SERVER["REQUEST_METHOD"]) {
@@ -9,7 +55,8 @@ class AuthController
         $user_email = $_POST["user_email"];
         $user_password = $_POST["user_password"];
 
-        if (UserModel::auth($user_email, $user_password) !== false) {
+        if (UserModel::auth($user_email, $user_password, $user) !== false) {
+          self::write_session($user);
           View::redirect("/");
         } else {
           View::renderPage("Login", [
@@ -27,27 +74,18 @@ class AuthController
     }
   }
 
-  public static function signup()
+  public static function logout()
   {
+    if (!self::is_logged_in())
+      View::redirect("/login");
+
     switch ($_SERVER["REQUEST_METHOD"]) {
       case "POST":
-        $user_name = $_POST["user_name"];
-        $user_email = $_POST["user_email"];
-        $user_password = $_POST["user_password"];
-
-        if (UserModel::create($user_name, $user_email, $user_password, $err_msg)) {
-          View::redirect("/"); // TODO: /wellcome?
-        } else {
-          View::renderPage("Signup", [
-            "user_name" => $user_name,
-            "user_email" => $user_email,
-            "user_password" => $user_password,
-            "error" => $err_msg
-          ]);
-        }
+        session_destroy();
+        View::redirect("/"); // TODO: /goodbye
         break;
       case "GET":
-        View::renderPage("Signup");
+        View::renderPage("Logout");
         break;
       default:
         View::error(ERR::METHOD_NOT_ALLOWED, "Your request could not be processed due to an invalid operation.");
