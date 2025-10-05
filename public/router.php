@@ -27,6 +27,12 @@ switch ($uri) {
   case "/post":
     PostController::post();
     break;
+  case "/user":
+    UserController::user();
+    break;
+  case "/profile":
+    UserController::profile();
+    break;
   default:
     View::error(ERR::NOT_FOUND, "Could not locate requested resource: $uri");
 }

@@ -13,15 +13,15 @@ class PostController
         $post_title = $_POST["post_title"];
         $post_content = $_POST["post_content"];
 
-        if (PostModel::create_post($post_owner_id, $post_title, $post_content, $err_msg, $post)) {
-          View::redirect("/"); // TODO: go to post page instead
-        } else {
+        if (PostModel::create_post($post_owner_id, $post_title, $post_content, $err_msg, $post_id))
+          View::redirect("/post?id=$post_id");
+        else
           View::renderPage("PostEditor", [
             "post_title" => $post_title,
             "post_content" => $post_content,
             "error" => $err_msg
           ]);
-        }
+
         break;
       case "GET":
         View::renderPage("PostEditor");
@@ -42,9 +42,12 @@ class PostController
           return;
         }
 
-        $post = PostModel::get_by_id($post_id);
+        $post = PostModel::get_post_by_id($post_id);
 
-        View::renderPage("Post", $post);
+        if ($post)
+          View::renderPage("Post", $post);
+        else
+          View::error(ERR::NOT_FOUND, "Post not found.");
         break;
       default:
         View::error(ERR::METHOD_NOT_ALLOWED, "Your request could not be processed due to an invalid operation.");

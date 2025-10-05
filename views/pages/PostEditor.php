@@ -8,7 +8,10 @@ View::render("page", [
   <form class="container flex-1" method="post">
     <div>
       <label>Title</label>
-      <input name="post_title" value="<?= $post_title ?? "" ?>">
+      <input
+        name="post_title"
+        maxlength="<?= PostModel::$TITLE_MAX_LENGTH ?>"
+        value="<?= $post_title ?? "" ?>">
     </div>
     <div class="flex-1" style="display: flex; flex-direction: column;">
       <label>Content</label>

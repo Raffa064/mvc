@@ -13,7 +13,7 @@ View::render("page", [
     <h1><?= $errno ?> - Something went wrong...</h1>
     <p><?= $message ?></p>
     <p id="errcode">ERR_<?= $errcode ?></p>
-    <p><a href="#" onclick="history.back(); return false;">Go back</a></p>
+    <p><?php View::render("go-back") ?></p>
   </main>
 
 <?php

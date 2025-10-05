@@ -3,6 +3,7 @@
 // Controllers
 require_once __DIR__ . "/controllers/AuthController.php";
 require_once __DIR__ . "/controllers/PostController.php";
+require_once __DIR__ . "/controllers/UserController.php";
 
 // Models
 require_once __DIR__ . "/models/DatabaseModel.php";

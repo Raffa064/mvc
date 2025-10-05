@@ -5,7 +5,7 @@ class UserModel
   public int $id;
   public string $name;
   public string $email;
-  public string $password;
+  public ?string $password;
 
   public static int $NAME_MIN_LENGTH = 3;
   public static int $NAME_MAX_LENGTH = 32;
@@ -13,7 +13,7 @@ class UserModel
   public static int $PASSWORD_MAX_LENGTH = 32;
   public static int $EMAIL_MAX_LENGTH = 256;
 
-  private function __construct(int $id = -1, string $name, string $email, string $password)
+  private function __construct(int $id = -1, string $name, string $email, ?string $password)
   {
     $this->id = $id;
     $this->name = $name;
@@ -93,5 +93,24 @@ class UserModel
     }
 
     return false;
+  }
+
+  public static function get_by_id(int $id, bool $include_credentials = false): ?UserModel
+  {
+    $sql = "SELECT * FROM users WHERE id = ?;";
+
+    $result = DatabaseModel::query($sql, [$id]);
+
+    if ($result === false || count($result) != 1)
+      return null;
+
+    $user = $result[0];
+
+    return new UserModel(
+      $id,
+      $user["name"],
+      $user["email"],
+      $include_credentials ? $user["password"] : null
+    );
   }
 }

@@ -45,7 +45,7 @@ CREATE VIEW post_view AS
     _post.owner_id,
     _user.name AS owner_name
   FROM posts _post 
-  JOIN users _user ON _user.id = _post.owner_id
+  LEFT JOIN users _user ON _user.id = _post.owner_id
   WHERE _post.root_id IS NULL;
 
 
@@ -57,5 +57,5 @@ CREATE VIEW post_content_view AS
     _post.owner_id,
     _user.name AS owner_name
   FROM posts _post 
-  JOIN users _user ON _user.id = _post.owner_id
+  LEFT JOIN users _user ON _user.id = _post.owner_id
   WHERE _post.root_id IS NULL;
