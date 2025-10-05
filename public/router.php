@@ -21,6 +21,12 @@ switch ($uri) {
   case "/logout":
     AuthController::logout();
     break;
+  case "/create":
+    PostController::create();
+    break;
+  case "/post":
+    PostController::post();
+    break;
   default:
     View::error(ERR::NOT_FOUND, "Could not locate requested resource: $uri");
 }

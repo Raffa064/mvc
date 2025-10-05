@@ -1,0 +1,21 @@
+#post-list {
+  padding: 1rem;
+}
+
+.post-item {
+  padding: .5rem;
+}
+
+.post-item .title {
+  font-weight: bold;
+  color: #ddd;
+}
+
+.post-item .info {
+  color: #579;
+  font-size: small;
+}
+
+.post-item .info *:not(:nth-child(1))::before {
+  content: "\00B7  ";
+}

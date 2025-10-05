@@ -23,22 +23,6 @@
   border: 1px solid #212837;
 }
 
-#auth-form #post-error-dialog {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: .5rem;
-  padding: .5rem 1rem;
-  background: #f003;
-  color: red;
-  border: 1px solid red;
-  border-radius: 4px;
-}
-
-#auth-form #post-error-dialog span {
-  font-family: monospace;
-}
-
 #auth-form button {
   background: #30a040;
   color: #ddd;

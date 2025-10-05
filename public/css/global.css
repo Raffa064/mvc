@@ -34,6 +34,36 @@ header nav {
 
 header #logo {
   font-weight: bold;
+  color: #eee;
+}
+
+header nav .clickable {
+  position: relative;
+}
+
+header nav .tooltip {
+  width: fit-content;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-90%);
+  background: #313847;
+  color: #eee;
+  padding: .5rem;
+  border-radius: 4px;
+  font-size: small;
+  white-space: nowrap;
+  opacity: 0;
+  transition: .2s;
+}
+
+header nav .clickable:hover {
+  scale: 1.1;
+}
+
+header nav .clickable:hover .tooltip {
+  display: block;
+  opacity: 1;
 }
 
 footer {
@@ -97,4 +127,20 @@ a:hover {
 
 .clickable:hover:not(:active) {
   filter: saturate(1.1) brightness(1.1) hue-rotate(5deg);
+}
+
+.error-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 1rem;
+  background: #f003;
+  color: red;
+  border: 1px solid red;
+  border-radius: 4px;
+}
+
+.error-box span {
+  font-family: monospace;
 }

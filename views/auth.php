@@ -42,14 +42,7 @@
     </div>
   <?php endif; ?>
 
-  <?php if (isset($error) && $error): ?>
-    <div id="post-error-dialog">
-      <img src="/assets/error.svg" style="color: blue" height="20">
-      <span class="flex-1">
-        <?= $error ?>
-      </span>
-    </div>
-  <?php endif; ?>
+  <?php View::render("error-box", $error) ?>
 
   <button class="clickable"> <?= $action ?> </button>
 
