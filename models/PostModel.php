@@ -9,11 +9,12 @@ class PostModel
   public ?int $reply_id;        // If set, the post is an reply to another comment
   public string $title;
   public ?string $content;      //  Can only be null if on a parcail view
+  public DateTime $created_at;
 
   public static int $TITLE_MAX_LENGTH = 32;
   public static int $CONTENT_MIN_LENGTH = 100;
 
-  public function __construct($id, $owner_id, $owner_name, $root_id, $reply_id, $title, $content)
+  public function __construct($id, $owner_id, $owner_name, $root_id, $reply_id, $title, $content, $created_at)
   {
     $this->id = $id;
     $this->owner_id = $owner_id;
@@ -22,6 +23,7 @@ class PostModel
     $this->reply_id = $reply_id;
     $this->title = $title;
     $this->content = $content;
+    $this->created_at = $created_at;
   }
 
   public function is_comment(): bool
@@ -55,8 +57,11 @@ class PostModel
       return false;
     }
 
-    $sql = "INSERT INTO posts(owner_id, root_id, reply_id, title, content) VALUES (?, ?, ?, ?, ?);";
-    $result = DatabaseModel::query($sql, [$owner_id, $root_id, $reply_id, $title, $content]);
+    $now = new DateTime();
+    $created_at = $now->format("Y-d h:i:s");
+
+    $sql = "INSERT INTO posts(owner_id, root_id, reply_id, title, content, created_at) VALUES (?, ?, ?, ?, ?);";
+    $result = DatabaseModel::query($sql, [$owner_id, $root_id, $reply_id, $title, $content, $created_at]);
 
     if ($result === false) {
       $err_msg = "Could not post.";
@@ -112,7 +117,13 @@ class PostModel
       $post["root_id"] ?? null,
       $post["reply_id"] ?? null,
       $post["title"],
-      $post["content"] ?? null
+      $post["content"] ?? null,
+      new DateTime($post["created_at"])
     );
+  }
+
+  public function get_ftime()
+  {
+    return $this->created_at->format("m/d/Y H:i");
   }
 }

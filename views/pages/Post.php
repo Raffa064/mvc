@@ -17,10 +17,11 @@ View::render("page", [
   <?php View::render("header"); ?>
 
   <main class="container flex-1">
-    <h1><?= htmlspecialchars($post->title) ?></h1>
-    <div>
-      <a href="/user?id=<?= $post->owner_id ?? "#" ?>"><?= htmlspecialchars($post->owner_name ?? "<Deleted user>") ?></a>
+    <div id="info">
+      <span>Posted by <a href="/user?id=<?= $post->owner_id ?? "#" ?>"><?= htmlspecialchars($post->owner_name ?? "<Deleted user>") ?></a></span>
+      <span><?= $post->get_ftime() ?></span>
     </div>
+    <h1><?= htmlspecialchars($post->title) ?></h1>
     <div id="content"><?= format_content_html($post->content) ?></div>
     <p><?php View::render("go-back") ?></p>
   </main>

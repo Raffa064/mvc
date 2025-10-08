@@ -7,6 +7,6 @@
   <div class="info">
     <span><?= 0 ?> mvccoins </span>
     <a href="/user?id=<?= $post->owner_id ?>"><?= htmlspecialchars($post->owner_name ?? "<Deleted user>") ?></a>
-    <span>1d ago</span>
+    <span><?= $post->get_ftime(); ?></span>
   </div>
 </li>

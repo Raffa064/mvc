@@ -10,7 +10,7 @@ View::render("page", [
 ?>
   <?php View::render("header") ?>
   <main class="container flex-1">
-    <h1><?= $user->name ?></h1>
+    <h1>Posts from <?= $user->name ?></h1>
     <ol id="post-list">
       <?php foreach ($user_posts as $post): ?>
         <?php View::render("post-item", $post); ?>

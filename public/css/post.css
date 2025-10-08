@@ -7,3 +7,11 @@ main {
 main #content {
   word-wrap: break-word;
 }
+
+main #info {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  color: #579;
+  font-size: smaller;
+}

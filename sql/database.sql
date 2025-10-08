@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS posts(
   reply_id int NULL,
   title VARCHAR(256) NOT NULL,
   content TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL,
 
   CONSTRAINT owner_id_fk 
     FOREIGN KEY (owner_id)
@@ -38,11 +39,13 @@ CREATE TABLE IF NOT EXISTS posts(
 
 INSERT INTO users(name, email, password) VALUES ("root", "test@test.com", 12345678);
 
+
 CREATE VIEW post_view AS
   SELECT
     _post.id,
     _post.title,
     _post.owner_id,
+    _post.created_at,
     _user.name AS owner_name
   FROM posts _post 
   LEFT JOIN users _user ON _user.id = _post.owner_id
@@ -55,6 +58,7 @@ CREATE VIEW post_content_view AS
     _post.title,
     _post.content,
     _post.owner_id,
+    _post.created_at,
     _user.name AS owner_name
   FROM posts _post 
   LEFT JOIN users _user ON _user.id = _post.owner_id
